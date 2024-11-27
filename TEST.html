@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>360° Viewer with Directional Arrows</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css">
+  <script src="pannellum.js"></script>
+  <style>
+    /* CSS để định dạng mũi tên */
+    .custom-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid rgba(255, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .custom-arrow:hover {
+      transform: scale(1.1);
+      border-bottom-color: rgba(255, 0, 0, 0.9);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="panorama" style="width: 100%; height: 730px;"></div>
+
+  <script>
+    (function () {
+      const originalAddEventListener = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (type, listener, options) {
+        if (type === 'touchstart' || type === 'touchmove' || type === 'mousewheel') {
+          if (typeof options === 'object') {
+            options.passive = true;
+          } else {
+            options = { passive: true };
+          }
+        }
+        originalAddEventListener.call(this, type, listener, options);
+      };
+    })();
+
+
+    const viewer = pannellum.viewer('panorama', {
+      autoLoad: true,
+      default: {
+        firstScene: 'scene3', // Cảnh đầu tiên khi load
+      },
+      scenes: {
+        scene1: {
+          type: 'equirectangular',
+          panorama: 'A1.jpg', // Đường dẫn ảnh 360° đầu tiên
+          hotSpots: [
+            {
+              pitch: -10.68, // Góc dọc của mũi tên
+              yaw: 170,   // Góc ngang của mũi tên
+              type: 'scene',
+              text: 'Đi vào',
+              sceneId: 'scene2', // Cảnh sẽ chuyển đến khi nhấp vào mũi tên
+            }
+          ]
+        },
+        scene2: {
+          type: 'equirectangular',
+          panorama: 'A2.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: 180,
+              type: 'scene',
+              text: 'Đi ra',
+              sceneId: 'scene1',
+            },
+            {
+              pitch: 5,
+              yaw: -30,
+              type: 'scene',
+              text: 'Sảnh tầng 1',
+              sceneId: 'scene3',
+            },
+          ]
+        },
+        scene3: {
+          type: 'equirectangular',
+          panorama: 'A3.jpg', // Đường dẫn ảnh 360° thứ ba
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 0,
+              type: 'scene',
+              text: 'Không gian khánh tiết',
+              sceneId: 'scene4',
+            },
+            {
+              pitch: -12,
+              yaw: -110,
+              type: 'scene',
+              text: 'Một số hình ảnh và hiện vật về điều kiện tự nhiên',
+              sceneId: 'scene5',
+            },
+            {
+              pitch: -12,
+              yaw: -130,
+              type: 'scene',
+              text: 'Lên tầng 2',
+              sceneId: 'scene17',
+            },
+            {
+              pitch: -3,
+              yaw: 123,
+              type: 'scene',
+              text: 'Lên tầng 2',
+              sceneId: 'scene32',
+            },
+            {
+              pitch: -3,
+              yaw: 110,
+              type: 'scene',
+              text: 'Nông nghiệp cổ truyền',
+              sceneId: 'scene22',
+            },
+          ]
+        },
+        scene4: {
+          type: 'equirectangular',
+          panorama: 'A4.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: -30,
+              yaw: 180,
+              type: 'scene',
+              text: 'Sảnh tầng 1',
+              sceneId: 'scene3',
+            },
+          ]
+        },
+        scene5: {
+          type: 'equirectangular',
+          panorama: 'A5.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: -10,
+              yaw: 140,
+              type: 'scene',
+              text: 'Sảnh tầng 1',
+              sceneId: 'scene3',
+            },
+            {
+              pitch: -30,
+              yaw: 180,
+              type: 'scene',
+              text: 'Đi lên tầng 2',
+              sceneId: 'scene32',
+            },
+            {
+              pitch: -10,
+              yaw: -130,
+              type: 'scene',
+              text: 'Sưu tập về Đà Nẵng thời tiền - sơ sử',
+              sceneId: 'scene6',
+            },
+          ]
+        },
+        scene6: {
+          type: 'equirectangular',
+          panorama: 'A6.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: 180,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene7',
+            },
+            {
+              pitch: -10,
+              yaw: -120,
+              type: 'scene',
+              text: 'Một số hình ảnh và hiện vật về điều kiện tự nhiên',
+              sceneId: 'scene5',
+            },
+          ]
+        },
+        scene7: {
+          type: 'equirectangular',
+          panorama: 'A7.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: 180,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene15',
+            },
+            {
+              pitch: -10,
+              yaw: -120,
+              type: 'scene',
+              text: 'Sưu tập về Đà Nẵng thời tiền - sơ sử',
+              sceneId: 'scene6',
+            },
+          ]
+        },
+        scene8: {
+          type: 'equirectangular',
+          panorama: 'A8.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 70,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene15',
+            },
+            {
+              pitch: -10,
+              yaw: 120,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene9',
+            },
+          ]
+        },
+        scene9: {
+          type: 'equirectangular',
+          panorama: 'A9.jpg', // Đường dẫn ảnh 360° thứ hai
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 40,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene8',
+            },
+            {
+              pitch: -10,
+              yaw: 120,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene10',
+            },
+          ]
+        },
+        scene10: {
+          type: 'equirectangular',
+          panorama: 'A10.jpg',
+          hotSpots: [
+            {
+              pitch: -20,
+              yaw: -140,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene9',
+            },
+            {
+              pitch: -10,
+              yaw: 150,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene11',
+            },
+          ]
+        },
+        scene11: {
+          type: 'equirectangular',
+          panorama: 'A11.jpg',
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: -70,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene12',
+            },
+            {
+              pitch: 0,
+              yaw: 80,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene10',
+            },
+          ]
+        },
+        scene12: {
+          type: 'equirectangular',
+          panorama: 'A12.jpg',
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 80,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene13',
+            },
+            {
+              pitch: 0,
+              yaw: -70,
+              type: 'scene',
+              text: 'Đời sống ngư dân và cảng biển',
+              sceneId: 'scene11',
+            },
+          ]
+        },
+        scene13: {
+          type: 'equirectangular',
+          panorama: 'A13.jpg',
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 80,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene14',
+            },
+            {
+              pitch: 0,
+              yaw: -70,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene12',
+            },
+          ]
+        },
+        scene14: {
+          type: 'equirectangular',
+          panorama: 'A14.jpg',
+          hotSpots: [
+            {
+              pitch: -5,
+              yaw: 90,
+              type: 'scene',
+              text: 'Một số hình ảnh đô thị Đà Nẵng trước năm 1975',
+              sceneId: 'scene16',
+            },
+            {
+              pitch: -10,
+              yaw: -90,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene13',
+            },
+          ]
+        },
+        scene15: {
+          type: 'equirectangular',
+          panorama: 'A15.jpg',
+          hotSpots: [
+            {
+              pitch: -5,
+              yaw: 90,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene7',
+            },
+            {
+              pitch: -10,
+              yaw: -70,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene8',
+            },
+            {
+              pitch: -10,
+              yaw: -90,
+              type: 'scene',
+              text: 'Các bộ sưu tập cổ vật',
+              sceneId: 'scene9',
+            },
+          ]
+        },
+        scene16: {
+          type: 'equirectangular',
+          panorama: 'A16.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: 150,
+              type: 'scene',
+              text: 'Hình ảnh Đà Nẵng hội nhập và phát triển',
+              sceneId: 'scene39',
+            },
+            {
+              pitch: -10,
+              yaw: -70,
+              type: 'scene',
+              text: 'Đà Nẵng qua các thời kỳ 1306-1954',
+              sceneId: 'scene14',
+            },
+          ]
+        },
+        scene39: {
+          type: 'equirectangular',
+          panorama: 'A39.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -120,
+              type: 'scene',
+              text: 'Nông nghiệp cổ truyền',
+              sceneId: 'scene22',
+            },
+            {
+              pitch: -5,
+              yaw: 100,
+              type: 'scene',
+              text: 'Một số hình ảnh đô thị Đà Nẵng trước năm 1975',
+              sceneId: 'scene16',
+            },
+          ]
+        },
+        scene22: {
+          type: 'equirectangular',
+          panorama: 'A22.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: 30,
+              type: 'scene',
+              text: 'Đà Nẵng hội nhập và phát triển',
+              sceneId: 'scene39',
+            },
+            {
+              pitch: 5,
+              yaw: -5,
+              type: 'scene',
+              text: 'Sảnh tầng 1',
+              sceneId: 'scene3',
+            },
+          ]
+        },
+        scene17: {
+          type: 'equirectangular',
+          panorama: 'A17.jpg',
+          hotSpots: [
+            {
+              pitch: -25,
+              yaw: -120,
+              type: 'scene',
+              text: 'Xuống tầng 1',
+              sceneId: 'scene3',
+            },
+            {
+              pitch: -15,
+              yaw: -115,
+              type: 'scene',
+              text: 'Lên tầng 3',
+              sceneId: 'scene38',
+            },
+            {
+              pitch: -5,
+              yaw: -70,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene19',
+            },
+            {
+              pitch: -5,
+              yaw: 100,
+              type: 'scene',
+              text: 'Sảnh tầng 2',
+              sceneId: 'scene32',
+            },
+          ]
+        },
+        scene32: {
+          type: 'equirectangular',
+          panorama: 'A32.jpg',
+          hotSpots: [
+            {
+              pitch: -5,
+              yaw: -70,
+              type: 'scene',
+              text: 'Sảnh tầng 2',
+              sceneId: 'scene17',
+            },
+            {
+              pitch: -5,
+              yaw: 155,
+              type: 'scene',
+              text: 'Lên tầng 3',
+              sceneId: 'scene38',
+            },
+            {
+              pitch: -15,
+              yaw: 140,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene33',
+            },
+          ]
+        },
+        scene18: {
+          type: 'equirectangular',
+          panorama: 'A18.jpg',
+          hotSpots: [
+            {
+              pitch: -25,
+              yaw: -180,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene20',
+            },
+            {
+              pitch: -5,
+              yaw: 100,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene19',
+            },
+          ]
+        },
+        scene19: {
+          type: 'equirectangular',
+          panorama: 'A19.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -90,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene18',
+            },
+            {
+              pitch: -15,
+              yaw: 140,
+              type: 'scene',
+              text: 'Đà Nẵng mở đầu mặt trận chống Pháp (1858-1860)',
+              sceneId: 'scene17',
+            },
+            {
+              pitch: -25,
+              yaw: 150,
+              type: 'scene',
+              text: 'Xuống tầng 1',
+              sceneId: 'scene3',
+            },
+            {
+              pitch: -15,
+              yaw: 175,
+              type: 'scene',
+              text: 'Lên tầng 3',
+              sceneId: 'scene38',
+            },
+          ]
+        },
+        scene20: {
+          type: 'equirectangular',
+          panorama: 'A20.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -180,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene21',
+            },
+            {
+              pitch: 5,
+              yaw: -10,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene18',
+            },
+          ]
+        },
+        scene21: {
+          type: 'equirectangular',
+          panorama: 'A21.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: 120,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene20',
+            },
+            {
+              pitch: 10,
+              yaw: 55,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Pháp (1946-1954)',
+              sceneId: 'scene29',
+            },
+          ]
+        },
+        scene29: {
+          type: 'equirectangular',
+          panorama: 'A29.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -100,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Pháp (1946-1954)',
+              sceneId: 'scene23',
+            },
+            {
+              pitch: -5,
+              yaw: 80,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene21',
+            },
+          ]
+        },
+        scene23: {
+          type: 'equirectangular',
+          panorama: 'A23.jpg',
+          hotSpots: [
+            {
+              pitch: -5,
+              yaw: 110,
+              type: 'scene',
+              text: 'Phong trào yêu nước trước năm 1930',
+              sceneId: 'scene29',
+            },
+            {
+              pitch: 5,
+              yaw: -5,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Mỹ (1955-1975)',
+              sceneId: 'scene24',
+            },
+          ]
+        },
+        scene24: {
+          type: 'equirectangular',
+          panorama: 'A24.jpg',
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: 70,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Mỹ (1955-1975)',
+              sceneId: 'scene25',
+            },
+            {
+              pitch: -15,
+              yaw: -180,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Mỹ (1955-1975)',
+              sceneId: 'scene23',
+            },
+          ]
+        },
+        scene25: {
+          type: 'equirectangular',
+          panorama: 'A25.jpg',
+          hotSpots: [
+            {
+              pitch: -10,
+              yaw: -70,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Mỹ (1955-1975)',
+              sceneId: 'scene24',
+            },
+            {
+              pitch: -5,
+              yaw: 85,
+              type: 'scene',
+              text: 'Đà Nẵng thành phố anh hùng',
+              sceneId: 'scene28',
+            },
+          ]
+        },
+        scene28: {
+          type: 'equirectangular',
+          panorama: 'A28.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -125,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene26',
+            },
+            {
+              pitch: 5,
+              yaw: 40,
+              type: 'scene',
+              text: 'Đà Nẵng trong kháng chiến chống Mỹ (1955-1975)',
+              sceneId: 'scene25',
+            },
+          ]
+        },
+        scene26: {
+          type: 'equirectangular',
+          panorama: 'A26.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -140,
+              type: 'scene',
+              text: 'Đà Nẵng thành phố anh hùng',
+              sceneId: 'scene28',
+            },
+            {
+              pitch: -5,
+              yaw: 85,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene27',
+            },
+          ]
+        },
+        scene27: {
+          type: 'equirectangular',
+          panorama: 'A27.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -100,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene26',
+            },
+            {
+              pitch: -5,
+              yaw: 80,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene30',
+            },
+          ]
+        },
+        scene30: {
+          type: 'equirectangular',
+          panorama: 'A30.jpg',
+          hotSpots: [
+            {
+              pitch: 0,
+              yaw: -50,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene27',
+            },
+            {
+              pitch: -15,
+              yaw: 150,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene31',
+            },
+          ]
+        },
+        scene31: {
+          type: 'equirectangular',
+          panorama: 'A31.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: -35,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene30',
+            },
+            {
+              pitch: -10,
+              yaw: -135,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene37',
+            },
+          ]
+        },
+        scene37: {
+          type: 'equirectangular',
+          panorama: 'A37.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: -10,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene31',
+            },
+            {
+              pitch: -10,
+              yaw: -90,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene33',
+            },
+          ]
+        },
+        scene33: {
+          type: 'equirectangular',
+          panorama: 'A33.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: -50,
+              type: 'scene',
+              text: 'Sảnh tầng 2',
+              sceneId: 'scene32',
+            },
+            {
+              pitch: -10,
+              yaw: -110,
+              type: 'scene',
+              text: 'Chứng tích chiến tranh',
+              sceneId: 'scene37',
+            },
+          ]
+        },
+        scene34: {
+          type: 'equirectangular',
+          panorama: 'A34.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: 70,
+              type: 'scene',
+              text: 'Văn hóa các dân tộc',
+              sceneId: 'scene36',
+            },
+            {
+              pitch: -10,
+              yaw: 150,
+              type: 'scene',
+              text: 'Sảnh tầng 3',
+              sceneId: 'scene38',
+            },
+          ]
+        },
+        scene38: {
+          type: 'equirectangular',
+          panorama: 'A38.jpg',
+          hotSpots: [
+            {
+              pitch: -15,
+              yaw: -170,
+              type: 'scene',
+              text: 'Văn hóa Việt',
+              sceneId: 'scene34',
+            },
+            {
+              pitch: -15,
+              yaw: 150,
+              type: 'scene',
+              text: 'Xuống tầng 2',
+              sceneId: 'scene32',
+            },
+          ]
+        },
+        scene35: {
+          type: 'equirectangular',
+          panorama: 'A35.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: -40,
+              type: 'scene',
+              text: 'Văn hóa các dân tộc',
+              sceneId: 'scene36',
+            },
+            {
+              pitch: -10,
+              yaw: -100,
+              type: 'scene',
+              text: 'Văn hóa các dân tộc',
+              sceneId: 'scene36',
+            },
+          ]
+        },
+        scene36: {
+          type: 'equirectangular',
+          panorama: 'A36.jpg',
+          hotSpots: [
+            {
+              pitch: 5,
+              yaw: -10,
+              type: 'scene',
+              text: 'Văn hóa các dân tộc',
+              sceneId: 'scene35',
+            },
+            {
+              pitch: -10,
+              yaw: 145,
+              type: 'scene',
+              text: 'Văn hóa Việt',
+              sceneId: 'scene34',
+            },
+          ]
+        },
+        
+      }
+    });
+
+  </script>
+</body>
+
+</html>
