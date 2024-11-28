@@ -18,16 +18,36 @@
       border-bottom: 30px solid rgba(255, 0, 0, 0.7);
       transition: all 0.3s ease;
     }
-/* sđ */
+
+    /* sđ */
     .custom-arrow:hover {
       transform: scale(1.1);
       border-bottom-color: rgba(255, 0, 0, 0.9);
+    }
+
+    #panorama {
+      width: 100%;
+      /* Chiều rộng luôn bằng 100% màn hình */
+      height: 100vh;
+      /* Chiều cao bằng 100% chiều cao khung nhìn */
+      max-height: 730px;
+      /* Đặt chiều cao tối đa nếu muốn giới hạn */
+      overflow: hidden;
+      /* Ẩn nội dung tràn nếu có */
+    }
+
+    /* Đảm bảo thiết kế phù hợp trên màn hình nhỏ */
+    @media (max-width: 768px) {
+      #panorama {
+        height: 70vh;
+        /* Với màn hình nhỏ, chiều cao chỉ chiếm 70% chiều cao */
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="panorama" style="width: 100%; height: 730px;"></div>
+  <div id="panorama"></div>
 
   <script>
     (function () {
@@ -887,7 +907,7 @@
             },
           ]
         },
-        
+
       }
     });
 
