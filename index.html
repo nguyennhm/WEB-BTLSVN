@@ -5,13 +5,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Viewer with Directional Arrows</title>
+  <!-- <link rel="icon" href="data:,"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css">
-  <script src="./Assets/Js/pannellum.js"></script>
+    <script src="Assets/Js/pannellum.js"></script>
   <style>
+    .custom-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid rgba(255, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    /* sđ */
+    .custom-arrow:hover {
+      transform: scale(1.1);
+      border-bottom-color: rgba(255, 0, 0, 0.9);
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
     #panorama {
       width: 100%;
       height: 100%;
-      overflow: hidden;
     }
   </style>
 </head>
@@ -43,7 +66,7 @@
       scenes: {
         scene1: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A1.jpg', // Đường dẫn ảnh 360° đầu tiên
+          panorama: 'Assets/Images/A1.jpg', // Đường dẫn ảnh 360° đầu tiên
           hotSpots: [
             {
               pitch: -10.68, // Góc dọc của mũi tên
@@ -56,7 +79,7 @@
         },
         scene2: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A2.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A2.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: -15,
@@ -76,7 +99,7 @@
         },
         scene3: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A3.jpg', // Đường dẫn ảnh 360° thứ ba
+          panorama: 'Assets/Images/A3.jpg', // Đường dẫn ảnh 360° thứ ba
           hotSpots: [
             {
               pitch: 0,
@@ -117,7 +140,7 @@
         },
         scene4: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A4.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A4.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: -30,
@@ -130,7 +153,7 @@
         },
         scene5: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A5.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A5.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: -10,
@@ -157,7 +180,7 @@
         },
         scene6: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A6.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A6.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: -15,
@@ -177,7 +200,7 @@
         },
         scene7: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A7.jpg',
+          panorama: 'Assets/Images/A7.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -197,7 +220,7 @@
         },
         scene8: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A8.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A8.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: 0,
@@ -217,7 +240,7 @@
         },
         scene9: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A9.jpg', // Đường dẫn ảnh 360° thứ hai
+          panorama: 'Assets/Images/A9.jpg', // Đường dẫn ảnh 360° thứ hai
           hotSpots: [
             {
               pitch: 0,
@@ -237,7 +260,7 @@
         },
         scene10: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A10.jpg',
+          panorama: 'Assets/Images/A10.jpg',
           hotSpots: [
             {
               pitch: -20,
@@ -257,7 +280,7 @@
         },
         scene11: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A11.jpg',
+          panorama: 'Assets/Images/A11.jpg',
           hotSpots: [
             {
               pitch: 0,
@@ -277,7 +300,7 @@
         },
         scene12: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A12.jpg',
+          panorama: 'Assets/Images/A12.jpg',
           hotSpots: [
             {
               pitch: 0,
@@ -297,7 +320,7 @@
         },
         scene13: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A13.jpg',
+          panorama: 'Assets/Images/A13.jpg',
           hotSpots: [
             {
               pitch: 0,
@@ -317,7 +340,7 @@
         },
         scene14: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A14.jpg',
+          panorama: 'Assets/Images/A14.jpg',
           hotSpots: [
             {
               pitch: -5,
@@ -337,7 +360,7 @@
         },
         scene15: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A15.jpg',
+          panorama: 'Assets/Images/A15.jpg',
           hotSpots: [
             {
               pitch: -5,
@@ -364,7 +387,7 @@
         },
         scene16: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A16.jpg',
+          panorama: 'Assets/Images/A16.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -384,7 +407,7 @@
         },
         scene39: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A39.jpg',
+          panorama: 'Assets/Images/A39.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -404,7 +427,7 @@
         },
         scene22: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A22.jpg',
+          panorama: 'Assets/Images/A22.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -424,7 +447,7 @@
         },
         scene17: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A17.jpg',
+          panorama: 'Assets/Images/A17.jpg',
           hotSpots: [
             {
               pitch: -25,
@@ -458,7 +481,7 @@
         },
         scene32: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A32.jpg',
+          panorama: 'Assets/Images/A32.jpg',
           hotSpots: [
             {
               pitch: -5,
@@ -485,7 +508,7 @@
         },
         scene18: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A18.jpg',
+          panorama: 'Assets/Images/A18.jpg',
           hotSpots: [
             {
               pitch: -25,
@@ -505,7 +528,7 @@
         },
         scene19: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A19.jpg',
+          panorama: 'Assets/Images/A19.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -539,7 +562,7 @@
         },
         scene20: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A20.jpg',
+          panorama: 'Assets/Images/A20.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -559,7 +582,7 @@
         },
         scene21: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A21.jpg',
+          panorama: 'Assets/Images/A21.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -579,7 +602,7 @@
         },
         scene29: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A29.jpg',
+          panorama: 'Assets/Images/A29.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -599,7 +622,7 @@
         },
         scene23: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A23.jpg',
+          panorama: 'Assets/Images/A23.jpg',
           hotSpots: [
             {
               pitch: -5,
@@ -619,7 +642,7 @@
         },
         scene24: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A24.jpg',
+          panorama: 'Assets/Images/A24.jpg',
           hotSpots: [
             {
               pitch: 0,
@@ -639,7 +662,7 @@
         },
         scene25: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A25.jpg',
+          panorama: 'Assets/Images/A25.jpg',
           hotSpots: [
             {
               pitch: -10,
@@ -659,7 +682,7 @@
         },
         scene28: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A28.jpg',
+          panorama: 'Assets/Images/A28.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -679,7 +702,7 @@
         },
         scene26: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A26.jpg',
+          panorama: 'Assets/Images/A26.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -699,7 +722,7 @@
         },
         scene27: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A27.jpg',
+          panorama: 'Assets/Images/A27.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -719,7 +742,7 @@
         },
         scene30: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A30.jpg',
+          panorama: 'Assets/Images/A30.jpg',
           hotSpots: [
             {
               pitch: 0,
@@ -739,7 +762,7 @@
         },
         scene31: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A31.jpg',
+          panorama: 'Assets/Images/A31.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -759,7 +782,7 @@
         },
         scene37: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A37.jpg',
+          panorama: 'Assets/Images/A37.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -779,7 +802,7 @@
         },
         scene33: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A33.jpg',
+          panorama: 'Assets/Images/A33.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -799,7 +822,7 @@
         },
         scene34: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A34.jpg',
+          panorama: 'Assets/Images/A34.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -819,7 +842,7 @@
         },
         scene38: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A38.jpg',
+          panorama: 'Assets/Images/A38.jpg',
           hotSpots: [
             {
               pitch: -15,
@@ -839,7 +862,7 @@
         },
         scene35: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A35.jpg',
+          panorama: 'Assets/Images/A35.jpg',
           hotSpots: [
             {
               pitch: 5,
@@ -859,7 +882,7 @@
         },
         scene36: {
           type: 'equirectangular',
-          panorama: './Assets/Images/A36.jpg',
+          panorama: 'Assets/Images/A36.jpg',
           hotSpots: [
             {
               pitch: 5,
